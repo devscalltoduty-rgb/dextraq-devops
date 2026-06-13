@@ -48,10 +48,8 @@ jobs:
             sudo docker login \
               --username AWS \
               --password-stdin $REGISTRY
-            sudo docker stop myappcontainer || true
-            sudo docker rm myappcontainer || true
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d \
-              --name myappcontainer \
+              --name $IMAGE_TAG \
               -p 80:80 \
               $REGISTRY/$REPOSITORY:$IMAGE_TAG
