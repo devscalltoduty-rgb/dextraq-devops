@@ -50,6 +50,6 @@ jobs:
               --password-stdin $REGISTRY
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d \
-              --name $IMAGE_TAG \
+              --name $REGISTRY/$REPOSITORY:$IMAGE_TAG \
               -p 80:80 \
               $REGISTRY/$REPOSITORY:$IMAGE_TAG
