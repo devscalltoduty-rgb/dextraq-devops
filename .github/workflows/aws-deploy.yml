@@ -23,10 +23,10 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ secrets.REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: devops001
         run: |-
-          docker build -t $REGISTRY/$REPOSITORY:devops001 .
-          docker push $REGISTRY/$REPOSITORY:devops01
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       - name: Deploy docker image to EC2
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -50,8 +50,8 @@ jobs:
               --password-stdin $REGISTRY
             sudo docker stop myappcontainer || true
             sudo docker rm myappcontainer || true
-            sudo docker pull $REGISTRY/$REPOSITORY:devops001
+            sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             sudo docker run -d \
               --name myappcontainer \
               -p 8080:80 \
-              $REGISTRY/$REPOSITORY:devops001
+              $REGISTRY/$REPOSITORY:$IMAGE_TAG
